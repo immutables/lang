@@ -1,0 +1,17 @@
+# EditorConfig helps configuring editing, lint and preview tools automatically
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+continuation_indent_size = 4
+charset = utf-8
+end_of_line = lf
+max_line_length = 100
+insert_final_newline = true
+
+[Makefile]
+indent_style = tab
+
+[{*.md,*.html,*.yaml,*.yml,*.css,*.js,*.jsx,*.ts,*.tsx,*.sql}]
+indent_size = 2

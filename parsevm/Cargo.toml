@@ -1,0 +1,17 @@
+[package]
+name = "parsevm"
+license = "Apache-2.0"
+authors = ["Eugene Lukash <e.lucash@gmail.com>"]
+description = "PEG-like parser tool, grammar matching implemented in virtual machine style, for handwritten lexers"
+repository = "https://github.com/immutables/lang"
+keywords = ["parser", "peg", "swar", "dsl"]
+
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+annotate-snippets = "0.12.10"
+
+[features]
+unsafe_optimizations = [] # off by default
+default = []

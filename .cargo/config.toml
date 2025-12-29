@@ -1,0 +1,14 @@
+[build]
+# Change this path to your RAM disk or external drive
+target-dir = "/Volumes/Scratch/.cargo/robohart/target"
+
+[term]
+verbose = false
+
+[env]
+# Ensure rustc and build scripts use RAM disk for temp files
+TMPDIR = "/Volumes/Scratch/.cargo/robohart/tmp"
+TEMP = "/Volumes/Scratch/.cargo/robohart/tmp"
+TMP = "/Volumes/Scratch/.cargo/robohart/tmp"
+# Maybe not working
+RUST_BACKTRACE = "full"
