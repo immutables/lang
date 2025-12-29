@@ -37,6 +37,10 @@
 # VS Code etc
 .vscode/
 
+# output
+/target/
+/.cargo/config.toml
+
 # MacOS custom file/folder attributes, irrelevant to the repo
 .DS_Store
 
