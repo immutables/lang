@@ -1,10 +1,10 @@
 //! Type parameter convention:
-//! * `C` - (now Node::Context) context delegate, the object which is used as grammar specific
+//! * `C` - (now Node::Context) context delegate, the object which is used as grammar-specific
 //!     context storage and factory, can be obtained from `Box<dyn Any>` in a passed mut [NodeCtx].
-//! * `P` - type of node/product associated with a product. It is usually something like
-//!     clean AST type. The parsed product entries as CST. Using "T" for a type can be confused
+//! * `P` - a type of node/product associated with a product. It is usually something like
+//!     a clean AST type. The parsed product entries as CST. Using "T" for a type can be confused
 //!     with "term" or "token" type, so it is "P" for "production".
-//! * `L` - type of part that is either sub-product or captured tokens, either way,
+//! * `L` - a type of part that is either sub-product or captured tokens, either way,
 //!     the role of a part is that we take `L` and apply it to `P`, as a "part". "L" stands
 //!     for "label" (as in "label part"), "P" for "part" can be confused with "production"
 
@@ -85,17 +85,17 @@ pub struct Transform<P: Node, F: Node> {
     transform: fn(from: F) -> P,
 }
 
-trait CreateNode {
+trait CreateNode: Send + Sync {
     fn create(&self, ctx: &mut NodeCtx) -> Box<dyn Any>;
 
     fn complete(&self, ctx: &mut NodeCtx, source_range: &Range<usize>, node: &mut Box<dyn Any>);
 }
 
-trait AttachPart {
+trait AttachPart: Send + Sync {
     fn attach_part(&self, ctx: &mut NodeCtx, node: &mut Box<dyn Any>, part: Box<dyn Any>);
 }
 
-trait TransformNode {
+trait TransformNode: Send + Sync {
     fn transform(&self, ctx: &mut NodeCtx, source_range: &Range<usize>, node: Box<dyn Any>) -> Box<dyn Any>;
 }
 

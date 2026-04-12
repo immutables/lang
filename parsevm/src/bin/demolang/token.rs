@@ -247,7 +247,7 @@ mod tests {
         assert_eq!(iter.collect::<Vec<_>>(), &[Token::LogicAnd, Token::LogicOr, Token::Tilde]);
         assert!(!not);
 
-        let (iter, not) = (!(Token::LogicAnd | Token::LogicOr)).iter_and_not();
+        let (iter, Rnot) = (!(Token::LogicAnd | Token::LogicOr)).iter_and_not();
         assert_eq!(iter.collect::<Vec<_>>(), &[Token::LogicAnd, Token::LogicOr]);
         assert!(not);
     }

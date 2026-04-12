@@ -11,8 +11,8 @@ pub const fn as_mask(b: u8) -> u64 {
 
 /// Given the read 64-bit word (here, usually in LE, but it doesn't matter for this fn),
 /// Detects if there are occurrences of the character (byte) specified by mask.
-/// The result is u64 which might have some bytes not zero-ed. So if the return value
-/// is `0`, then there are no occurrences of the character in question. But if it's not zero
+/// The result is u64, which might have some bytes not zeroed. So if the return value
+/// is `0`, then there are no occurrences of the character in question. But if it's not zero,
 /// then the returned pattern may be checked for non-zero bytes, or input u64 could be directly
 /// inspected for the bytes you're looking for.
 /// The mask is prepared by using [as_mask] `const fn`.
@@ -23,8 +23,8 @@ pub fn detect_mask(w: u64, mask: u64) -> u64 {
     (w as i64 - ONE_EACH_BYTE as i64) as u64 & !w & SIGN_BIT_EACH_BYTE
 }
 
-// Here we have some attempts to read in u64/longs. If we do this byte-by-byte
-// it would be fast enough, but maybe not that great. Fast unaligned access might be cooler,
+// Here we have some attempts to read in u64/longs. If we do this byte-by-byte,
+// it would be fast enough but maybe not that great. Fast unaligned access might be cooler,
 // but it requires unsafe etc. Then there's byte order, which is LE on most relevant archs now.
 
 const USE_READ_UNALIGNED: bool = cfg!(feature = "unsafe_optimizations");
@@ -38,14 +38,14 @@ pub fn read_u64_le(source: &[u8], offset: usize, read: &mut usize) -> u64 {
         if USE_READ_UNALIGNED {
             unsafe {
                 // This unsafe block is inline and not extracted because
-                // we have a check for source len boundary above.
-                // Paired with the check it is considered safe
+                // we have a check for the source len boundary above.
+                // Paired with the check, it is considered safe
                 let ptr = source.as_ptr().add(offset) as *const u64;
                 // from_le should be noop on LE architectures
                 u64::from_le(ptr.read_unaligned())
             }
         } else {
-            // Manually constructing, should not be that bad either if somehow optimized
+            // Manually constructing should not be that bad either if somehow optimized
             source[offset] as u64
                 | (source[offset + 1] as u64) << (1 * 8)
                 | (source[offset + 2] as u64) << (2 * 8)

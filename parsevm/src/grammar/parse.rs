@@ -15,7 +15,7 @@ struct ParseCtx<T: Term> {
 
 #[derive(Debug, Default)]
 pub struct FarthestMismatch<T: Term> {
-    /// 0 position in term Seeker is before first term
+    /// 0-position in term [Seeker] is before the first term
     index: usize,
     /// Term Idx, this one is zero-based, has Idx::default() as OUT_OF_RANGE
     pub at: Idx,
