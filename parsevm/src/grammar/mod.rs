@@ -528,15 +528,15 @@ pub enum MatchCapture {
     },
     Term {
         quant: Quant,
-        term: Box<dyn Any>,
+        term: Box<dyn Any + Send + Sync>,
     },
     TermOneOf {
         quant: Quant,
-        terms: Vec<Box<dyn Any>>, // token or &str
+        terms: Vec<Box<dyn Any + Send + Sync>>, // token or &str
     },
     TermLast {
         not: bool,
-        term: Box<dyn Any>,
+        term: Box<dyn Any + Send + Sync>,
     },
     Group {
         quant: Quant,

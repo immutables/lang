@@ -362,7 +362,7 @@ impl<T: EitherTerms> Match for T {
 
         if v.len() == 0 { panic!("empty either terms not allowed") }
         if v.len() == 1 {
-            let term: Box<dyn Any> = Box::new(v.pop().unwrap());
+            let term: Box<dyn Any + Send + Sync> = Box::new(v.pop().unwrap());
 
             MatchCapture::Term {
                 quant,
@@ -370,7 +370,7 @@ impl<T: EitherTerms> Match for T {
             }
         } else {
             let terms = v.into_iter().map(|t| {
-                let term: Box<dyn Any> = Box::new(t);
+                let term: Box<dyn Any + Send + Sync> = Box::new(t);
                 term
             }).collect::<Vec<_>>();
 
@@ -384,7 +384,7 @@ impl<T: EitherTerms> Match for T {
 
 impl Match for &'static str {
     fn capture(self) -> MatchCapture {
-        let term: Box<dyn Any> = Box::new(self);
+        let term: Box<dyn Any + Send + Sync> = Box::new(self);
         MatchCapture::Term {
             quant: Default::default(),
             term,

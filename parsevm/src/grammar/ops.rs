@@ -378,7 +378,7 @@ fn hash_map_alias<T: Term>(aliases: Vec<(&'static str, Box<dyn Any>)>) -> HashMa
     h
 }
 
-fn extract_term<T: Term>(boxed: &Box<dyn Any>, aliases: &HashMap<&'static str, T>) -> T {
+fn extract_term<T: Term>(boxed: &Box<dyn Any + Sync + Send>, aliases: &HashMap<&'static str, T>) -> T {
     if let Some(&term) = boxed.downcast_ref::<T>() {
         term
     } else if let Some(&alias) = boxed.downcast_ref::<&'static str>() {

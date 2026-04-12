@@ -6,7 +6,7 @@ use std::hash::Hash;
 use std::ops::{Index, IndexMut, Range};
 
 /// Term
-pub trait Term: Debug + Default + Copy + Eq + Hash + 'static {
+pub trait Term: Debug + Default + Copy + Eq + Hash + Send + Sync + 'static {
     /// Allows ignoring/skipping terms, like whitespace etc
     fn should_skip(&self) -> bool { false }
 }
